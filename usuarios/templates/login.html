@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <div class="container">
+        <form class="mt-4" action="{% url 'login' %}" method="post"> {% csrf_token %} 
+            <label class="mt-2">E-mail</label>
+            <input type="email" placeholder="Digite seu e-mail..." name="email" class="form-control" />
+            <label class="mt-3">Senha</label>
+            <input type="password" placeholder="Digite sua senha" name="senha" class="form-control" />
+            <input type="submit" class="btn btn-success mt-4" />
+        </form>
+    </div>
+
+{% endblock %}
