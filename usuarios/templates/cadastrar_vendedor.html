@@ -2,6 +2,12 @@
 
 {% block 'body' %}
     <div class="container">
+        {% if messages  %}
+            <br>
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %} 
         <form class="mt-4" action="{% url 'cadastrar_vendedor' %}" method="post"> {% csrf_token %} 
             <label class="mt-2">E-mail</label>
             <input type="email" placeholder="Digite seu e-mail..." name="email" class="form-control" />
@@ -26,7 +32,12 @@
                         <th>{{vendedor.first_name}}</th>
                         <td>{{vendedor.last_name}}</td>
                         <td>{{vendedor.email}}</td>
-                        <td>{{vendedor.last_login}}</td>
+                        <td>{% if not vendedor.last_login %}
+                                Primeiro acesso
+                            {% else %}
+                                {{vendedor.last_login}}</td>
+                            {% endif %}
+                        
                         <td><a href="{% url 'excluir_usuario' vendedor.id %}" class="btn btn-danger">EXCLUIR</a></td>
 
                     </tr>

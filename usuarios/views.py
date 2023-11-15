@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib import auth
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 @has_permission_decorator('cadastrar_vendedor')
 def cadastrar_vendedor(request):
@@ -53,4 +54,5 @@ def logout(request):
 def excluir_usuario(request, id):
     vendedor = get_object_or_404(Users, id=id)
     vendedor.delete()
+    messages.add_message(request, messages.SUCCESS, 'Vendedor excluído com sucesso')
     return redirect(reverse('cadastrar_vendedor'))
