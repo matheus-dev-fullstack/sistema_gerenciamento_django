@@ -27,7 +27,7 @@
                         <td>{{vendedor.last_name}}</td>
                         <td>{{vendedor.email}}</td>
                         <td>{{vendedor.last_login}}</td>
-                        <td><a class="btn btn-danger">EXCLUIR</a></td>
+                        <td><a href="{% url 'excluir_usuario' vendedor.id %}" class="btn btn-danger">EXCLUIR</a></td>
 
                     </tr>
                     {% endfor %}
