@@ -6,11 +6,16 @@ from datetime import date
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.contrib import messages
 
 def add_produto(request):
     if request.method == "GET":
         categoria = Categoria.objects.all()
-        return render(request, 'add_produto.html', {'categorias': categoria})
+        produtos = Produto.objects.all()
+        
+        return render(request, 'add_produto.html', {'categorias': categoria, 'produtos': produtos})
     elif request.method == "POST":
         nome =request.POST.get('nome')
         categoria = request.POST.get('categoria')
@@ -29,7 +34,7 @@ def add_produto(request):
             img = img.convert('RGB')
             img = img.resize((300, 300))
             draw = ImageDraw.Draw(img)
-            draw.text((20, 280), f"MarcaDágua", (255, 255, 255))
+            draw.text((20, 280), f"Construct", (255, 255, 255))
             output = BytesIO()
             img.save(output, format='jpeg', quality=100)
             output.seek(0)
@@ -44,7 +49,8 @@ def add_produto(request):
             
             img_dj = Imagem(imagem = img_final, produto=produto)
             img_dj.save()
-                
-        return HttpResponse('foi')
+        messages.add_message(request, messages.SUCCESS, 'Produto cadastrado com sucesso.')
+
+        return redirect(reverse('add_produto'))
         
         
