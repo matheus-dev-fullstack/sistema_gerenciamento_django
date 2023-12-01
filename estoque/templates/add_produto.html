@@ -32,15 +32,17 @@
         </select>
     </form>
     <hr style="background-color: gray;"></hr>
-    <div class="listar_produtos">
+    <div class="listar_produtos d-flex flex-wrap justify-content-between">
         {% for produto in produtos %}
-            <div class="card bg-dark mb-3" style="width: 18rem;">
-                
-                <img class="card-img-top" src="{{produto | get_first_image}}">
+            <div class="card bg-dark mb-3" style="width: 15rem;">
+                {% if produto|get_first_image %}
+                    <img class="card-img-top"width="100%" src="{{produto | get_first_image}}">
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{produto.nome}}</h5>
                     <span class="badge badge-info mb-2">{{produto.categoria}}</span> 
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <br/>
+                    <a href="#" class="btn btn-primary">Acessar</a>
                 </div>
             </div>
         {% endfor %}
