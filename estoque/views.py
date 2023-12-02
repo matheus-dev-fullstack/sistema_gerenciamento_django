@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from .forms import ProdutoForm
 from .models import Categoria, Produto, Imagem
 from django.http import HttpResponse
 from PIL import Image, ImageDraw
@@ -54,5 +56,11 @@ def add_produto(request):
         messages.add_message(request, messages.SUCCESS, 'Produto cadastrado com sucesso.')
 
         return redirect(reverse('add_produto'))
-        
-        
+
+def produto(request, slug):
+    if request.method == "GET":
+        produto = Produto.objects.get(slug=slug)
+        data = produto.__dict__
+        data['categoria'] = produto.categoria
+        form = ProdutoForm(initial=data)
+        return render(request, 'produto.html', {'form': form})
